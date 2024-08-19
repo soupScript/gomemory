@@ -68,6 +68,60 @@ func Dealloc(slice*[]int, deallocsize int, ioWarning bool, autoSolution bool,cus
 
 }
 
+//-128-127 int
+
+func Optimize(slice*[]int) []int{
+	for i:=0;i<len(*slice)-1;i++{
+		if (*slice)[i]!=0 && i!=0{
+			if (*slice)[0]+(*slice)[i]<127 && (*slice)[0]+(*slice)[i]>-128{
+				(*slice)[0]+=(*slice)[i]
+				(*slice)[i]=0
+			}
+		}
+	}
+	var placeholder int
+	for i:=0;i<len(*slice)-1;i++{
+		if (*slice)[i]==0{
+			placeholder=i
+			break
+		}
+
+	}
+ 	*slice=(*slice)[:(len(*slice)-(len(*slice)-placeholder))]
+	return *slice
+}
+
+func Realloc(slice*[]int, size int, customId string) []int{
+	if size%4!=0{
+		fmt.Println("Error at "+customId+": Desired size not divisible by 4")
+		return *slice
+	}else if size==len(*slice)*4{
+		fmt.Println("Error at "+customId+": Reallocation size and current size are the same. If you want to optimize the memory, use Optimize(slice*[]int)")
+		return *slice
+	}
+	if size>len(*slice)*4{
+		for i:=0;i<(size-len(*slice)*4)/4;i++{
+			*slice=append(*slice, 0)
+		}
+		return *slice
+	}
+	if size<len(*slice)*4{
+		Optimize(slice)
+		if len(*slice)*4!=size{
+                	for i:=0;i<(size-len(*slice)*4)/4;i++{                                                                                                                       
+                        	*slice=append(*slice, 0)                                                                                                                             
+                	}      
+		}
+		if len(*slice)*4!=size{
+			fmt.Println("Note at "+customId+": Size did not reach realloc in end result most likely due to optimize not having enough space to compress slots")
+		}
+		return *slice
+
+	}
+	return *slice
+}
+
+
 
 
 
