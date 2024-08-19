@@ -1,4 +1,4 @@
-package gomemory
+package main
 
 import ("fmt")
 
@@ -32,21 +32,11 @@ func Shift(slice*[]int, slot1 int, slot2 int) []int{
           return *slice
 }
 
-
-func Dealloc(slice*[]int, deallocsize int, ioWarning bool,customId string) []int{
+func Dealloc(slice*[]int, deallocsize int, ioWarning bool, autoSolution bool,customId string) []int{
 	var placeholder string
 	if deallocsize%4!=0{
 		fmt.Println("Error on "+customId+": Deallocation size not divisible by 4")
 		return *slice
-	}
-	if len(*slice)==1 && ioWarning{
-		fmt.Println("Warning on "+ customId+": Only 1 memory slot. Empty it?")
-		fmt.Scanln(&placeholder)
-		if placeholder!="y"{
-			return *slice
-		}
-		
-
 	}
 	for i:=0;i<len(*slice);i++{
 		if i==len(*slice)-1{
@@ -64,8 +54,12 @@ func Dealloc(slice*[]int, deallocsize int, ioWarning bool,customId string) []int
 					return *slice
 				}
 				
-			}else{
-				 *slice = (*slice)[:len(*slice)-1]
+			}else if autoSolution && (*slice)[i]!=0{
+				Shift(slice, len(*slice)-2, len(*slice)-1)
+				*slice = (*slice)[:len(*slice)-1]
+
+			}else if (*slice)[i]!=0{
+				*slice = (*slice)[:len(*slice)-1]
 
 			}
 		}
@@ -73,7 +67,6 @@ func Dealloc(slice*[]int, deallocsize int, ioWarning bool,customId string) []int
 	return *slice
 
 }
-
 
 
 
