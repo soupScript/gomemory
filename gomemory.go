@@ -1,8 +1,7 @@
-package main//gomemory
+package gomemory
 
 import (
 "fmt"
-//"math"
 )
 func Malloc(slice*[]int, allocsize int, customId string) []int{
 	if allocsize%4!=0{
@@ -79,7 +78,6 @@ func Optimize(slice*[]int) []int{
 				
 				(*slice)[0]+=(*slice)[i]
 				(*slice)[i]=0
-				fmt.Println(i, ":",slice)
 			}
 		}
 	}
@@ -170,13 +168,6 @@ func Add(slice*[]int, num int) []int{
 	return *slice
 }
 
-func main(){
-	test:=[]int{1,2,4}
-	fmt.Println(Checksize(4, test))
-	Optimize(&test)
-	fmt.Println(Checksize(4, test))
-	fmt.Println(test)
-}
 
 
 
