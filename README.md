@@ -9,14 +9,11 @@ ____________________________________________________________
 # Import
 
 
-`
-import (
+`import (
 "github.com/soupScript/gomemory"
 )
 
 func main(){
 gomemory.xyz
 
-}
-
-`
+}`
