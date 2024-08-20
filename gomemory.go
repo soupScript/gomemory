@@ -1,4 +1,4 @@
-package gomemory
+package main//gomemory
 
 import (
 "fmt"
@@ -73,11 +73,13 @@ func Dealloc(slice*[]int, deallocsize int, ioWarning bool, autoSolution bool,cus
 //-128-127 int
 
 func Optimize(slice*[]int) []int{
-	for i:=0;i<len(*slice)-1;i++{
+	for i:=0;i<len(*slice);i++{
 		if (*slice)[i]!=0 && i!=0{
 			if (*slice)[0]+(*slice)[i]<127 && (*slice)[0]+(*slice)[i]>-128{
+				
 				(*slice)[0]+=(*slice)[i]
 				(*slice)[i]=0
+				fmt.Println(i, ":",slice)
 			}
 		}
 	}
@@ -166,6 +168,14 @@ func Add(slice*[]int, num int) []int{
 		}
 	}
 	return *slice
+}
+
+func main(){
+	test:=[]int{1,2,4}
+	fmt.Println(Checksize(4, test))
+	Optimize(&test)
+	fmt.Println(Checksize(4, test))
+	fmt.Println(test)
 }
 
 
