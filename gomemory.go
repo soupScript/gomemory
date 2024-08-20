@@ -4,9 +4,6 @@ import (
 "fmt"
 //"math"
 )
-func Test(){
-	fmt.Println("test")
-}
 func Malloc(slice*[]int, allocsize int, customId string) []int{
 	if allocsize%4!=0{
 		fmt.Println("Error in "+customId+": Allocation size not a multiple of 4!")
