@@ -1,6 +1,9 @@
 package gomemory
 
-import ("fmt")
+import (
+"fmt"
+//"math"
+)
 
 func Malloc(slice*[]int, allocsize int, customId string) []int{
 	if allocsize%4!=0{
@@ -121,8 +124,50 @@ func Realloc(slice*[]int, size int, customId string) []int{
 	return *slice
 }
 
+func Add(slice*[]int, num int) []int{
+	if num+(*slice)[len(*slice)-1]<127 && num+(*slice)[len(*slice)-1]>-128{
+		(*slice)[len(*slice)-1]+=num
+		return *slice
+	}else{
+		outScopeBreak:=false
+		numref:=num
+		negative:=false
+		if numref<0{negative=true}
+		for{
+			if !negative{
+				*slice=append(*slice, 0)
+				for i:=0;i<127;i++{
+					(*slice)[len(*slice)-1]+=1
+					numref-=1
+				
+					if numref==0{
+						outScopeBreak=true
+						break
+					}
+				}
+			}else{
+				//
+				*slice =append(*slice, 0)
+                                for i:=0;i>-128;i-=1{
+                                        (*slice)[len(*slice)-1]-=1
+                                        numref+=1
+                                                          
+                                        if numref==0{     
+                                                outScopeBreak=true
+                                                break     
+                                        }
+                                } 
 
-
+			
+		
+			}
+			if outScopeBreak{
+				break
+			}
+		}
+	}
+	return *slice
+}
 
 
 
